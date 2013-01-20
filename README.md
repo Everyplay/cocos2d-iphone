@@ -1,3 +1,26 @@
+# Everyplay for cocos2d-iphone
+
+All examples link Everyplay framework from a relative path. To get started, please clone
+the repository at https://github.com/Everyplay/everyplay-ios-sdk/ to the same subdirectory
+where you'll place `cocos2d-iphone`. No git submodule usage planned.
+
+```
+% git clone https://github.com/Everyplay/everyplay-ios-sdk.git
+% git clone https://github.com/Everyplay/cocos2d-iphone.git
+% cd cocos2d-iphone
+% open -a Xcode cocos2d-ios.xcodeproj
+```
+
+Try running one of the following examples on a device:
+
+- ParticleTest
+- RenderTextureTest
+- RotateWorldTest
+- SceneTest
+- SpriteTest
+
+For more information, please visit us at https://developers.everyplay.com
+
 cocos2d for iPhone
 ==================
 
