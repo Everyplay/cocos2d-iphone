@@ -1,9 +1,10 @@
 #import "cocos2d.h"
+#import <Everyplay/Everyplay.h>
 
 @class CCLabel;
 
 //CLASS INTERFACE
-@interface AppController : NSObject <UIAccelerometerDelegate, UIAlertViewDelegate, UITextFieldDelegate, UIApplicationDelegate>
+@interface AppController : NSObject <EveryplayDelegate, UIAccelerometerDelegate, UIAlertViewDelegate, UITextFieldDelegate, UIApplicationDelegate>
 {
     UIWindow *window;
 }

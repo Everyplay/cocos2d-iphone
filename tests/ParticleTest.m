@@ -1628,7 +1628,42 @@ Class restartAction()
 	CCScene *scene = [CCScene node];
 	[scene addChild: [nextAction() node]];
 
+	// Initialize Everyplay SDK with our client id and secret.
+	// These can be created at https://developers.everyplay.com
+	[Everyplay setClientId:@"b459897317dc88c80b4515e380e1378022f874d2" clientSecret:@"f1a162969efb1c27aac6977f35b34127e68ee163" redirectURI:@"https://m.everyplay.com/auth"];
+
+	// Register class responsible for EveryplayDelegate and view used.
+	// NOTICE: If you do have your own UIViewController, replace this
+	// method with [Everyplay initWithDelegate:andParentViewController:]
+	// instead
+	[Everyplay initWithDelegate:self andAddRootViewControllerForView:[[CCDirector sharedDirector] openGLView]];
+
+	// For quick testing, let's auto-record for a few seconds
+	//
+	// When integrating against your game, call startRecording and stopRecording
+	// methods from [[Everyplay sharedInstance] capture] instead
+	[[[Everyplay sharedInstance] capture] autoRecordForSeconds:10 withDelay:2];
+
 	[director runWithScene: scene];
+}
+
+- (void)everyplayShown {
+	NSLog(@"everyplayShown");
+	[[CCDirector sharedDirector] pause];
+}
+
+- (void)everyplayHidden {
+	NSLog(@"everyplayHidden");
+	[[CCDirector sharedDirector] resume];
+}
+
+- (void)everyplayRecordingStopped {
+	NSLog(@"everyplayRecordingStopped");
+
+	// Set metadata for the ongoing or last active recording
+	[[Everyplay sharedInstance] mergeSessionDeveloperData:@{@"score" : @42, @"level_name" : @"cocos2d 1.x"}];
+	// Bring up Everyplay video player
+	[[Everyplay sharedInstance] playLastRecording];
 }
 
 - (void) dealloc

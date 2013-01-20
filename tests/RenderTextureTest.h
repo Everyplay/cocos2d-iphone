@@ -1,10 +1,11 @@
 #import "Cocos2d.h"
+#import <Everyplay/Everyplay.h>
 
 @class Sprite;
 
 //CLASS INTERFACE
 #ifdef __IPHONE_OS_VERSION_MAX_ALLOWED
-@interface AppController : NSObject <UIApplicationDelegate>
+@interface AppController : NSObject <EveryplayDelegate, UIApplicationDelegate>
 {
 	UIWindow *window;
 }
