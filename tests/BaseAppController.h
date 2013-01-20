@@ -12,10 +12,11 @@
 
 #ifdef __CC_PLATFORM_IOS
 
+#import <Everyplay/Everyplay.h>
 
 @class UIWindow, UINavigationController;
 
-@interface BaseAppController : NSObject <UIApplicationDelegate, CCDirectorDelegate>
+@interface BaseAppController : NSObject <EveryplayDelegate, UIApplicationDelegate, CCDirectorDelegate>
 {
 	UIWindow *window_;
 	UINavigationController *navController_;

@@ -4602,8 +4602,8 @@ Class restartAction()
 	navController_.navigationBarHidden = YES;
 
 	// set the Navigation Controller as the root view controller
-	[window_ addSubview:navController_.view];
-//	[window_ setRootViewController:navController_];	// iOS6 bug: Needs setRootViewController
+//	[window_ addSubview:navController_.view];
+	[window_ setRootViewController:navController_];	// iOS6 bug: Needs setRootViewController
 
 	// make main window visible
 	[window_ makeKeyAndVisible];
@@ -4632,6 +4632,20 @@ Class restartAction()
 
 	// and run it!
 	[director_ pushScene: scene];
+
+	// Initialize Everyplay SDK with our client id and secret.
+	// These can be created at https://developers.everyplay.com
+	[Everyplay setClientId:@"b459897317dc88c80b4515e380e1378022f874d2" clientSecret:@"f1a162969efb1c27aac6977f35b34127e68ee163" redirectURI:@"https://m.everyplay.com/auth"];
+
+	// Register class responsible for EveryplayDelegate and
+	// view controller used
+	[Everyplay initWithDelegate:self andParentViewController:[CCDirector sharedDirector]];
+
+	// For quick testing, let's auto-record for a few seconds
+	//
+	// When integrating against your game, call startRecording and stopRecording
+	// methods from [[Everyplay sharedInstance] capture] instead
+	[[[Everyplay sharedInstance] capture] autoRecordForSeconds:10 withDelay:2];
 
 	return YES;
 }

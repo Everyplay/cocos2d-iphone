@@ -59,12 +59,45 @@
 	navController_.navigationBarHidden = YES;
 
 	// AddSubView doesn't work on iOS6
-	[window_ addSubview:navController_.view];
-//	[window_ setRootViewController:navController_];
+//	[window_ addSubview:navController_.view];
+	[window_ setRootViewController:navController_];
 
 	[window_ makeKeyAndVisible];
 
+	// Initialize Everyplay SDK with our client id and secret.
+	// These can be created at https://developers.everyplay.com
+	[Everyplay setClientId:@"b459897317dc88c80b4515e380e1378022f874d2" clientSecret:@"f1a162969efb1c27aac6977f35b34127e68ee163" redirectURI:@"https://m.everyplay.com/auth"];
+
+	// Register class responsible for EveryplayDelegate and
+	// view controller used
+	[Everyplay initWithDelegate:self andParentViewController:[CCDirector sharedDirector]];
+
+	// For quick testing, let's auto-record for a few seconds
+	//
+	// When integrating against your game, call startRecording and stopRecording
+	// methods from [[Everyplay sharedInstance] capture] instead
+	[[[Everyplay sharedInstance] capture] autoRecordForSeconds:10 withDelay:2];
+
 	return YES;
+}
+
+- (void)everyplayShown {
+	NSLog(@"everyplayShown");
+	[[CCDirector sharedDirector] pause];
+}
+
+- (void)everyplayHidden {
+	NSLog(@"everyplayHidden");
+	[[CCDirector sharedDirector] resume];
+}
+
+- (void)everyplayRecordingStopped {
+	NSLog(@"everyplayRecordingStopped");
+
+	// Set metadata for the ongoing or last active recording
+	[[Everyplay sharedInstance] mergeSessionDeveloperData:@{@"score" : @42, @"level_name" : @"cocos2d-iphone 2.x"}];
+	// Bring up Everyplay video player
+	[[Everyplay sharedInstance] playLastRecording];
 }
 
 // getting a call, pause the game
